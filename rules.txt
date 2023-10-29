@@ -1,0 +1,14 @@
+process:list
+process:stop:2323
+process:start:Notepad.exe
+
+screenshot:name1.png
+
+keylog:start
+keylog:stop
+
+logout
+
+shutdown
+
+getfile:name1.txt

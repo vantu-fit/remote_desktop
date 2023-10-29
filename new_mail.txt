@@ -1,0 +1,5 @@
+dotu30257@gmail.com=process:start:Notepad.exe
+dotu30257@gmail.com=keylog:start
+dotu30257@gmail.com=keylog:stop
+dotu50257@gmail.com=dotu30257@gmail.com=screenshot:name2.png
+dotu50257@gmail.com=screenshot:name2.png
