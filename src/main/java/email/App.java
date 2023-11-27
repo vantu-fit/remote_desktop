@@ -196,7 +196,7 @@ public class App {
     panel.add(connectButton, constraints);
     constraints.gridx = 1;
     panel.add(cancelButton, constraints);
-    textField.setText("dotu30257@gmail.com");
+    textField.setText("leminhquan19092004@gmail.com");
 
     frame.add(panel);
     frame.pack();
