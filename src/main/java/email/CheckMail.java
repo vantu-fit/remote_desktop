@@ -2,6 +2,7 @@ package email;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -12,24 +13,31 @@ import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.InternetAddress;
+import java.util.Date;
 
-class Pair<K, V> {
+class Pair<K, V, T> {
 
-  private K key;
-  private V value;
+    private K key;
+    private V value;
+    private Date time;
 
-  public Pair(K key, V value) {
-    this.key = key;
-    this.value = value;
-  }
+    public Pair(K key, V value, Date time) {
+        this.key = key;
+        this.value = value;
+        this.time = time;
+    }
 
-  public K getKey() {
-    return key;
-  }
+    public K getKey() {
+        return key;
+    }
 
-  public V getValue() {
-    return value;
-  }
+    public V getValue() {
+        return value;
+    }
+
+    public Date getTime() {
+        return time;
+    }
 }
 
 public class CheckMail {
@@ -51,7 +59,7 @@ public class CheckMail {
     this.password = password;
   }
 
-  public List<Pair<String, String>> fetch() { // return null
+  public List<Pair<String, String, Date>> fetch() { // return null
     try {
       // create properties field
       Properties properties = new Properties();
@@ -72,20 +80,23 @@ public class CheckMail {
       int start = Math.max(1, totalMessages - 4);
       System.out.println(start);
 
-      List<Pair<String, String>> pairList = new ArrayList<>();
+      List<Pair<String, String, Date>> pairList = new ArrayList<>();
       Message[] messages = emailFolder.getMessages(start, totalMessages);
 
       for (int i = 0; i < messages.length; i++) {
         Message message = messages[i];
         String from = ((InternetAddress) message.getFrom()[0]).getAddress();
         String subject = message.getSubject();
-        pairList.add(new Pair<String, String>(from, subject));
+        Date time = message.getSentDate(); // Thời gian gửi email
+        pairList.add(new Pair<String, String, Date>(from, subject, time));
       }
       BufferedWriter writer = new BufferedWriter(
         new FileWriter("new_mail.txt")
       );
-      for (Pair<String, String> pair : pairList) {
-        writer.write(pair.getKey() + "=" + pair.getValue());
+      for (Pair<String, String, Date> pair : pairList) {
+        //writer.write(pair.getKey() + "=" + pair.getValue());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        writer.write(pair.getKey() + "=" + pair.getValue() + "," + dateFormat.format(pair.getTime()));
         writer.newLine();
       }
 

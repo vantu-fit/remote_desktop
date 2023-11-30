@@ -24,6 +24,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 class ServerThreading extends Thread {
 
@@ -75,9 +78,19 @@ class CheckingThreading extends Thread {
   }
 
   //==================================================================================================
+  private Date parseDate(String dateStr) {
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.parse(dateStr);
+    } catch (ParseException e) {
+        e.printStackTrace();
+        return null;
+    }
+  } 
+  
   public boolean checking(
-    Pair<String, String> newMail,
-    List<Pair<String, String>> oldMail
+    Pair<String, String, Date> newMail,
+    List<Pair<String, String, Date>> oldMail
   ) {
     if (!newMail.getKey().equals(this.from)) {
       return false;
@@ -85,11 +98,13 @@ class CheckingThreading extends Thread {
     if (oldMail == null) {
       return true;
     }
-    for (Pair<String, String> old : oldMail) {
-      if (old.getValue().equals(newMail.getValue())) {
+
+    for (Pair<String, String, Date> old : oldMail) {
+      if (old.getValue().equals(newMail.getValue()) && old.getTime().equals(newMail.getTime())) {
         return false;
       }
     }
+
     return true;
   }
 
@@ -101,19 +116,28 @@ class CheckingThreading extends Thread {
       public void run() {
         System.out.println("Task executed at regular interval");
 
-        List<Pair<String, String>> new_mail = new ArrayList<Pair<String, String>>();
-        List<Pair<String, String>> old_mail = new ArrayList<Pair<String, String>>();
+        List<Pair<String, String, Date>> new_mail = new ArrayList<Pair<String, String, Date>>();
+        List<Pair<String, String, Date>> old_mail = new ArrayList<Pair<String, String, Date>>();
 
-        List<Pair<String, String>> newMail = gmailmail.fetch();
+        List<Pair<String, String, Date>> newMail = gmailmail.fetch();
         try {
           BufferedReader reader_new = new BufferedReader(
             new FileReader("new_mail.txt")
           );
           String line;
           while ((line = reader_new.readLine()) != null) {
-            String[] mail = line.split("=");
+            String[] parts = line.split("=");
+            String email = parts[0];
+            String commandAndDate = parts[1];
+            String[] commandAndDateParts = commandAndDate.split(",");
+            if (commandAndDateParts.length == 2) {
+              String command = commandAndDateParts[0];
+              String dateStr = commandAndDateParts[1];
+              // Chuyển đổi chuỗi ngày thành đối tượng Date
+              Date date = parseDate(dateStr);
 
-            new_mail.add(new Pair<String, String>(mail[0], mail[1]));
+              new_mail.add(new Pair<String, String, Date>(email, command, date));
+            }
           }
 
           BufferedReader reader_old = new BufferedReader(
@@ -121,8 +145,18 @@ class CheckingThreading extends Thread {
           );
           line = "";
           while ((line = reader_old.readLine()) != null) {
-            String[] mail = line.split("=");
-            old_mail.add(new Pair<String, String>(mail[0], mail[1]));
+            String[] parts = line.split("=");
+            String email = parts[0];
+            String commandAndDate = parts[1];
+            String[] commandAndDateParts = commandAndDate.split(",");
+            if (commandAndDateParts.length == 2) {
+              String command = commandAndDateParts[0];
+              String dateStr = commandAndDateParts[1];
+              // Chuyển đổi chuỗi ngày thành đối tượng Date
+              Date date = parseDate(dateStr);
+
+              old_mail.add(new Pair<String, String, Date>(email, command, date));
+            }
           }
           reader_new.close();
           reader_old.close();
@@ -132,7 +166,7 @@ class CheckingThreading extends Thread {
         List<String> task = new ArrayList<String>();
         task.add("end");
         if (new_mail != null) {
-          for (Pair<String, String> mailItem : new_mail) {
+          for (Pair<String, String, Date> mailItem : new_mail) {
             if (checking(mailItem, old_mail)) {
               task.add(0, mailItem.getValue());
             }
@@ -146,8 +180,9 @@ class CheckingThreading extends Thread {
           BufferedWriter writer = new BufferedWriter(
             new FileWriter("old_mail.txt")
           );
-          for (Pair<String, String> pair : new_mail) {
-            writer.write(pair.getKey() + "=" + pair.getValue());
+          for (Pair<String, String, Date> pair : new_mail) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            writer.write(pair.getKey() + "=" + pair.getValue() + "," + dateFormat.format(pair.getTime()));
             writer.newLine();
           }
           writer.close();
@@ -196,7 +231,7 @@ public class App {
     panel.add(connectButton, constraints);
     constraints.gridx = 1;
     panel.add(cancelButton, constraints);
-    textField.setText("dotu30257@gmail.com");
+    textField.setText("leminhquan19092004@gmail.com");
 
     frame.add(panel);
     frame.pack();

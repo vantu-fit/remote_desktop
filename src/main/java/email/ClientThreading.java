@@ -37,15 +37,22 @@ public class ClientThreading extends Thread {
       while (!(line = this.reader.readLine()).equals("end")) {
         task.add(line);
       }
-      for (String s : task) {
-        System.out.println("server  ==>  " + s);
-        RemotePC remote = new RemotePC(s, this.keylog , send);
-        remote.run();
+      
+      // Kiểm tra xem danh sách task có dữ liệu không
+      if (!task.isEmpty()) {
+        for (String s : task) {
+            System.out.println("server  ==>  " + s);
+            RemotePC remote = new RemotePC(s, this.keylog, send);
+            remote.run();
+        }
+      } else {
+        System.out.println("No tasks received from the client.");
       }
+      
       socket.close();
       System.out.println("Client disconnected");
     } catch (Exception e) {
-      System.out.println(e);
+      System.out.println("Error: " + e);
     }
   }
 }
