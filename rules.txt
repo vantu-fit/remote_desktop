@@ -11,4 +11,4 @@ logout
 
 shutdown
 
-getfile:name1.txt
+getfile_C:\Users\name1.txt

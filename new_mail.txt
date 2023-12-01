@@ -1,5 +1,5 @@
-leminhquan19092004@gmail.com=keylog:start,2023-11-30 17:23:22
-leminhquan19092004@gmail.com=keylog:stop,2023-11-30 17:25:00
-leminhquan19092004@gmail.com=keylog:start,2023-11-30 17:27:35
-leminhquan19092004@gmail.com=keylog:stop,2023-11-30 17:29:05
-leminhquan19092004@gmail.com=keylog:start,2023-11-30 17:33:27
+chau.khuu777@gmail.com=getfile:C/Users/choukhuu/xinchao.txt,2023-12-01 20:37:50
+chau.khuu777@gmail.com=getfile:xinchao.txt,2023-12-01 20:42:13
+chau.khuu777@gmail.com=keylog:start,2023-12-01 20:43:06
+chau.khuu777@gmail.com=keylog:stop,2023-12-01 20:43:45
+leminhquan19092004@gmail.com=getfile_C:\Users\lemin\OneDrive\Desktop\Quân\ĐRL.docx,2023-12-01 20:49:18
