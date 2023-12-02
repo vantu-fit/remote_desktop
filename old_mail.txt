@@ -1,5 +1,5 @@
-chau.khuu777@gmail.com=getfile:C/Users/choukhuu/xinchao.txt,2023-12-01 20:37:50
-chau.khuu777@gmail.com=getfile:xinchao.txt,2023-12-01 20:42:13
-chau.khuu777@gmail.com=keylog:start,2023-12-01 20:43:06
-chau.khuu777@gmail.com=keylog:stop,2023-12-01 20:43:45
-leminhquan19092004@gmail.com=getfile_C:\Users\lemin\OneDrive\Desktop\Quân\ĐRL.docx,2023-12-01 20:49:18
+leminhquan19092004@gmail.com=getfile_C:\Users\lemin\Downloads\Ảnh.jpg,2023-12-02 22:28:19
+leminhquan19092004@gmail.com=getfile_C:\Users\lemin\Downloads\mang-may-tinh__05.network-layer - [cuuduongthancong.com].pdf,2023-12-02 23:24:19
+leminhquan19092004@gmail.com=getfile:C:\Users\lemin\Downloads\mang-may-tinh__05.network-layer - [cuuduongthancong.com].pdf,2023-12-02 23:30:18
+leminhquan19092004@gmail.com=getfile:C:\Users\lemin\Downloads\mang-may-tinh__05.network-layer - [cuuduongthancong.com].pdf,2023-12-02 23:34:00
+leminhquan19092004@gmail.com=getfile:C:\Users\lemin\Downloads\mang-may-tinh__05.network-layer - [cuuduongthancong.com].pdf,2023-12-02 23:39:05

