@@ -1,4 +1,4 @@
-package ui;
+package email.ui;
 
 import java.util.regex.Pattern;
 import email.KeyLog;
@@ -37,7 +37,7 @@ public class Login extends javax.swing.JFrame {
         Right.setBackground(new java.awt.Color(0, 102, 102));
         Right.setPreferredSize(new java.awt.Dimension(400, 500));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("src\\main\\java\\ui\\image\\logo.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("src\\main\\java\\email\\ui\\image\\logo.png")); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));

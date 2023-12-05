@@ -15,8 +15,6 @@ import javax.mail.Store;
 import javax.mail.internet.InternetAddress;
 import java.util.Date;
 
-import email.Pair;
-
 public class CheckMail {
 
   String host = "pop.gmail.com";

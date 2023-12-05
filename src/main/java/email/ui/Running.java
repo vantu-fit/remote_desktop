@@ -1,4 +1,4 @@
-package ui;
+package email.ui;
 
 public class Running extends javax.swing.JFrame {
 
@@ -40,7 +40,7 @@ public class Running extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\ui\\\\image\\\\logo.png")); 
+        jLabel1.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\logo.png")); 
 
         jLabel2.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -87,10 +87,10 @@ public class Running extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 50)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 102));
         jLabel4.setText("CONNECTED");
-        jLabel5.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\ui\\\\image\\\\controller.png")); 
+        jLabel5.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\controller.png")); 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText(this.from);
-        jLabel7.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\ui\\\\image\\\\action.png")); 
+        jLabel7.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\action.png")); 
         // jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         // jTextField2.setForeground(new java.awt.Color(102, 102, 102));
 
