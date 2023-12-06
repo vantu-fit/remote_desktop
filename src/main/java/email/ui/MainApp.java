@@ -42,19 +42,14 @@ class CheckingThreading extends Thread {
     }
   } 
 
-  public boolean compareTime(Date dateToCompare) {
+  private static boolean compareTime(Date dateToCompare) {
       Date currentTime = new Date();
-
       long diffInMillies = Math.abs(currentTime.getTime() - dateToCompare.getTime());
       long diffInSeconds = diffInMillies / 1000;
-
-      if (diffInSeconds > 40) {
-        return true;
-      } 
-      else return false;
+      return diffInSeconds <= 40;
   }
   
-  public boolean checking(
+  private boolean checking(
     Pair<String, String, Date> newMail,
     List<Pair<String, String, Date>> oldMail
   ) {
@@ -67,7 +62,7 @@ class CheckingThreading extends Thread {
 
     for (Pair<String, String, Date> old : oldMail) {
       if ( (old.getValue()+old.getTime()).equals(newMail.getValue()+newMail.getTime()) ) {
-        if ( compareTime(newMail.getTime()) ){
+        if ( !compareTime(newMail.getTime()) ){
           return false;
         }
       }
