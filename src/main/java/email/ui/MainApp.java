@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -15,48 +13,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import email.KeyLog;
-import email.SendMail;
-import email.ClientThreading;
 import email.CheckMail;
 import email.ClientSocket;
-
 import email.Pair;
-
-class ServerThreading extends Thread {
-
-  public KeyLog keylog;
-  SendMail send;
-
-  public ServerThreading(KeyLog keyLog, SendMail send) {
-    this.keylog = keyLog;
-    this.send = send;
-  }
-
-  public void run() {
-    try {
-      ServerSocket serverSocket = new ServerSocket(5000);
-      System.out.println("Server is running...");
-      boolean stop = false;
-      while (!stop) {
-        Socket socket = serverSocket.accept();
-        ClientThreading clientSocket = new ClientThreading(
-          socket,
-          keylog,
-          send
-        );
-        clientSocket.start();
-      }
-      serverSocket.close();
-    } catch (Exception e) {
-      System.out.println(e);
-    }
-  }
-}
-
-//==================================================================================================
-//==================================================================================================
-//==================================================================================================
 
 class CheckingThreading extends Thread {
 
@@ -82,6 +41,18 @@ class CheckingThreading extends Thread {
         return null;
     }
   } 
+
+  public boolean compareTime(Date dateToCompare) {
+      Date currentTime = new Date();
+
+      long diffInMillies = Math.abs(currentTime.getTime() - dateToCompare.getTime());
+      long diffInSeconds = diffInMillies / 1000;
+
+      if (diffInSeconds > 40) {
+        return true;
+      } 
+      else return false;
+  }
   
   public boolean checking(
     Pair<String, String, Date> newMail,
@@ -95,11 +66,12 @@ class CheckingThreading extends Thread {
     }
 
     for (Pair<String, String, Date> old : oldMail) {
-      if (old.getValue().equals(newMail.getValue()) && old.getTime().equals(newMail.getTime())) {
-        return false;
+      if ( (old.getValue()+old.getTime()).equals(newMail.getValue()+newMail.getTime()) ) {
+        if ( compareTime(newMail.getTime()) ){
+          return false;
+        }
       }
     }
-
     return true;
   }
 
@@ -187,8 +159,7 @@ class CheckingThreading extends Thread {
       }
     };
 
-    long interval = 50000;
-
+    long interval = 20000;
     timer.scheduleAtFixedRate(task, 0, interval);
   }
 }

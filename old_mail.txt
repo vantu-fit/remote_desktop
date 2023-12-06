@@ -1,5 +1,5 @@
-chau.khuu777@gmail.com=getfile_C:\Users\choukhuu\xinchao.txt,2023-12-04 22:01:37
-chau.khuu777@gmail.com=getfile_C:\Users\choukhuu\xinchao,2023-12-04 22:01:52
-chau.khuu777@gmail.com=getfile:C:\Users\choukhuu\Documents\English\Basic_IELTS_Reading_0a2f61146e.pdf,2023-12-04 22:03:41
-chau.khuu777@gmail.com=getfile:C:\Users\choukhuu\OneDrive - VNU-HCMUS\Documents\BaiGiangMatlab.pdf,2023-12-04 22:08:00
-chau.khuu777@gmail.com=getfile:C:\Users\choukhuu\xinchao.txt,2023-12-05 11:24:00
+leminhquan19092004@gmail.com=screenshot:name1.png,2023-12-06 12:46:37
+leminhquan19092004@gmail.com=screenshot:name1.png,2023-12-06 12:49:33
+leminhquan19092004@gmail.com=screenshot:name1.png,2023-12-06 12:49:39
+leminhquan19092004@gmail.com=screenshot:name1.png,2023-12-06 12:51:07
+leminhquan19092004@gmail.com=screenshot:name1.png,2023-12-06 12:53:04
