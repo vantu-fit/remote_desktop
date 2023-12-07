@@ -38,7 +38,6 @@ public class ClientThreading extends Thread {
         task.add(line);
       }
       
-      // Kiểm tra xem danh sách task có dữ liệu không
       if (!task.isEmpty()) {
         for (String s : task) {
             System.out.println("server  ==>  " + s);

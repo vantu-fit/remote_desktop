@@ -1,5 +1,8 @@
 package email.ui;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.regex.Pattern;
 import email.KeyLog;
 import email.SendMail;
@@ -11,6 +14,20 @@ public class Login extends javax.swing.JFrame {
         initComponents();
     }
 
+    private String getDefaultMail() {
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader("new_mail.txt"));
+            String line, tempString = "";
+            while ((line = reader.readLine()) != null) {
+                tempString = line.split("=")[0];
+            }
+            reader.close();
+            return tempString;
+        }catch (IOException e) {
+            return "";
+        }
+
+    }
  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -94,7 +111,7 @@ public class Login extends javax.swing.JFrame {
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField1.setText("leminhquan19092004@gmail.com");
+        jTextField1.setText(getDefaultMail());
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 51, 51));
