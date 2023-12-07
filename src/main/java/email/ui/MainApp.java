@@ -166,6 +166,7 @@ public class MainApp {
         LoginFrame.setVisible(true);
         LoginFrame.pack();
         LoginFrame.setLocationRelativeTo(null); 
+        LoginFrame.setResizable(false);
     }
     
 }

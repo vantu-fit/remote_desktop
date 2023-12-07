@@ -186,6 +186,7 @@ public class Login extends javax.swing.JFrame {
         RunningFrame.setVisible(true);
         RunningFrame.pack();
         RunningFrame.setLocationRelativeTo(null); 
+        RunningFrame.setResizable(false);
         this.dispose();
     }
 
