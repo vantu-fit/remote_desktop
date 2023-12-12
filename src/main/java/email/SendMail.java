@@ -62,7 +62,7 @@ public class SendMail {
     }
   }
 
-  public void sendFile(String path) {
+  public boolean sendFile(String path) {
     try {
       this.message.setSubject("Response remote file");
       MimeBodyPart filePart = new MimeBodyPart();
@@ -72,8 +72,10 @@ public class SendMail {
       this.message.setContent(multipart);
       Transport.send(message);
       System.out.println("Send mail file success!");
+      return true;
     } catch (Exception e) {
       e.printStackTrace();
+      return false;
     }
   }
 

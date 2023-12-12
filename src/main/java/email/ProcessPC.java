@@ -17,7 +17,7 @@ public class ProcessPC {
     }
   }
 
-  public void listProcess() {
+  public boolean listProcess() {
     try {
       Process process = runtime.exec("tasklist");
       BufferedReader reader = new BufferedReader(
@@ -31,57 +31,69 @@ public class ProcessPC {
       }
       writer.close();
       reader.close();
+      return true;
     } catch (Exception e) {
       System.out.println(e);
+      return false;
     }
   }
 
-  public void startProcess(String cmd) {
+  public boolean startProcess(String cmd) {
     try {
       ProcessBuilder builder = new ProcessBuilder(cmd);
       builder.start();
       System.out.println("Start procss: " + cmd + " successfull");
+      return true;
     } catch (Exception e) {
       System.out.println("Start procss: " + cmd + " failed");
+      return false;
     }
   }
 
-  public void stopProcess(String pid) {
+  public boolean stopProcess(String pid) {
     try {
       this.runtime.exec("taskkill /F /PID " + pid);
       System.out.println("Stop procss: " + pid + " successfull");
+      return true;
     } catch (Exception e) {
       System.out.println("Stop procss: " + pid + " failed");
+      return false;
     }
   }
 
-  public void logout() {
+  public boolean logout() {
     try {
       Process process = this.runtime.exec("shutdown -s -t 3600");
       int exitCode = process.waitFor();
 
       if (exitCode == 0) {
         System.out.println("Logout successfull");
+        return true;
       } else {
         System.out.println("Logout faild . Exit code: " + exitCode);
+        return false;
       }
     } catch (Exception e) {
       System.out.println(e);
+      return false;
     }
   }
 
-  public void shutdown() {
+  public boolean shutdown() {
     try {
       Process process = this.runtime.exec("shutdown -s -t 3600");
       int exitCode = process.waitFor();
 
       if (exitCode == 0) {
         System.out.println("Shutdown successfull");
+        return true;
       } else {
         System.out.println("Shutdown faild. Exit code: " + exitCode);
+        return false;
       }
     } catch (Exception e) {
       System.out.println(e);
+      return false;
     }
   }
 }

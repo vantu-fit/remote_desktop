@@ -2,12 +2,18 @@ package email.ui;
 
 import java.util.TimerTask;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import email.ServerThreading;
+
 import java.util.Date;
 
 public class Running extends javax.swing.JFrame {
@@ -69,7 +75,7 @@ public class Running extends javax.swing.JFrame {
         }
         StringBuilder sb = new StringBuilder("<html>");
         for (String t : task) {
-            sb.append(t).append("<br>");
+            sb.append('-'+t).append("<br>");
         }
         sb.append("</html>");
         return sb.toString();
@@ -84,6 +90,7 @@ public class Running extends javax.swing.JFrame {
                     List<String> task = returnTask();
                     String formated_task = formatTask(task);
                     jLabel8.setText(formated_task);
+                    jLabel2.setText(ServerThreading.status);
                 });
             }
         }, 0, 1000);
@@ -115,15 +122,17 @@ public class Running extends javax.swing.JFrame {
         jPanel1.setLayout(null);
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\logo.png")); 
 
-        jLabel2.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); 
+        jLabel1.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\notification1.png")); 
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Remote PC");
+        jLabel2.setText("No notification!");
+        //jLabel2.setText("Remote PC");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
-        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel3.setText("All rights reserved");
+        // jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
+        // jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        // jLabel3.setText("All rights reserved");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -132,26 +141,26 @@ public class Running extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
+                        .addGap(10,10,10)
                         .addComponent(jLabel1))
+                    // .addGroup(jPanel2Layout.createSequentialGroup()
+                    //     .addGap(0, 81, Short.MAX_VALUE)
+                    //     .addComponent(jLabel3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 81, Short.MAX_VALUE)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, 103)
+                        .addGap(10,10, 10)
                         .addComponent(jLabel2)))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 130, 136)
+                .addGap(10,10,10)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(78, 78, 78))
+                .addGap(10,10,10)
+                .addComponent(jLabel2))
+                // .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                // .addComponent(jLabel3)
+                // .addGap(78, 78, 78))
         );
 
         jPanel1.add(jPanel2);

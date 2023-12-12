@@ -6,6 +6,7 @@ import java.net.Socket;
 public class ServerThreading extends Thread {
 
   public KeyLog keylog;
+  public static String status = "No notification";
   SendMail send;
 
   public ServerThreading(KeyLog keyLog, SendMail send) {
