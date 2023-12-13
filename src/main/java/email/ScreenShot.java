@@ -16,7 +16,6 @@ public class ScreenShot {
       Rectangle screenRect = new Rectangle(
         (Toolkit.getDefaultToolkit()).getScreenSize()
       );
-
       BufferedImage screenImage = robot.createScreenCapture(screenRect);
 
       File outputFile = new File(name);
@@ -27,7 +26,4 @@ public class ScreenShot {
       System.out.println("Screenshot failed");
     }
   }
-  // public static void main(String[] args) {
-  //   new ScreenShot("name1.png");
-  // }
 }

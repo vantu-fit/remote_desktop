@@ -46,7 +46,7 @@ class CheckingThreading extends Thread {
       Date currentTime = new Date();
       long diffInMillies = Math.abs(currentTime.getTime() - dateToCompare.getTime());
       long diffInSeconds = diffInMillies / 1000;
-      return diffInSeconds <= 40;
+      return diffInSeconds <= 20;
   }
   
   private boolean checking(
@@ -125,19 +125,7 @@ class CheckingThreading extends Thread {
         } catch (Exception e) {
           System.out.println(e);
         }
-        List<String> task = new ArrayList<String>();
-        task.add("end");
-        if (new_mail != null) {
-          for (Pair<String, String, Date> mailItem : new_mail) {
-            if (checking(mailItem, old_mail)) {
-              task.add(0, mailItem.getValue());
-            }
-          }
-        }
-        for (String item : task) {
-          System.out.println(item);
-        }
-        ClientSocket client = new ClientSocket(task);
+
         try {
           BufferedWriter writer = new BufferedWriter(
             new FileWriter("old_mail.txt")
@@ -151,10 +139,24 @@ class CheckingThreading extends Thread {
         } catch (Exception e) {
           System.out.println(e);
         }
+
+        List<String> task = new ArrayList<String>();
+        task.add("end");
+        if (new_mail != null) {
+          for (Pair<String, String, Date> mailItem : new_mail) {
+            if (checking(mailItem, old_mail)) {
+              task.add(0, mailItem.getValue());
+            }
+          }
+        }
+        for (String item : task) {
+          System.out.println(item);
+        }
+        ClientSocket client = new ClientSocket(task);
       }
     };
 
-    long interval = 20000;
+    long interval = 5000;
     timer.scheduleAtFixedRate(task, 0, interval);
   }
 }

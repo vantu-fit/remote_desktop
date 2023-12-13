@@ -2,15 +2,13 @@ package email.ui;
 
 import java.util.TimerTask;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.Image; 
 
 import email.ServerThreading;
 
@@ -81,16 +79,54 @@ public class Running extends javax.swing.JFrame {
         return sb.toString();
     }
 
+    private void getDemo(javax.swing.JLabel demoShow)
+    {
+        if (ServerThreading.fileDemo != "")
+        {
+            demoShow.setIcon(null);
+            ServerThreading.screenshotDemo = null;
+            demoShow.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
+            demoShow.setForeground(new java.awt.Color(255, 255, 255));
+            demoShow.setText(ServerThreading.fileDemo);
+        }
+        if (ServerThreading.screenshotDemo != null)
+        {
+            demoShow.setText("");
+            int width = 352;
+            int height = 198; 
+            demoShow.setIcon(new ImageIcon(ServerThreading.screenshotDemo.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+        }
+    }
+
     private void startTimer() {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
+            int count = 0;
+            String check = "check";
             @Override
             public void run() {
                 SwingUtilities.invokeLater(() -> {
-                    List<String> task = returnTask();
-                    String formated_task = formatTask(task);
-                    jLabel8.setText(formated_task);
-                    jLabel2.setText(ServerThreading.status);
+                        List<String> task = returnTask();
+                        String formated_task = formatTask(task);
+                        jLabel8.setText(formated_task);
+                        jLabel3.setText("-Running: " + ServerThreading.statusRunning);
+                        if (count % 2 == 0) {
+                            getDemo(demo);
+                            jLabel2.setText("-Done: " + ServerThreading.status);
+                        }
+                        if (count % 8 == 0) {
+                            if (check == ServerThreading.statusRunning && ServerThreading.statusRunning != "nothing is running"){
+                                ServerThreading.statusRunning = "nothing is running";
+                                jLabel3.setText("-Running: " + ServerThreading.statusRunning);
+                                jLabel2.setText("");
+                                demo.setText("");
+                                demo.setIcon(null);
+                                ServerThreading.fileDemo = "";
+                                ServerThreading.screenshotDemo = null;
+                            }
+                            else check = ServerThreading.statusRunning;
+                        }
+                        count++;
                 });
             }
         }, 0, 1000);
@@ -106,6 +142,8 @@ public class Running extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        demo = new javax.swing.JLabel();
+
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -122,17 +160,15 @@ public class Running extends javax.swing.JFrame {
         jPanel1.setLayout(null);
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 
-
         jLabel1.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\notification1.png")); 
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("No notification!");
-        //jLabel2.setText("Remote PC");
+        jLabel2.setText("-Done: ");
 
-        // jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
-        // jLabel3.setForeground(new java.awt.Color(204, 204, 204));
-        // jLabel3.setText("All rights reserved");
+        jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Running: nothing!!!");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -143,11 +179,14 @@ public class Running extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(10,10,10)
                         .addComponent(jLabel1))
-                    // .addGroup(jPanel2Layout.createSequentialGroup()
-                    //     .addGap(0, 81, Short.MAX_VALUE)
-                    //     .addComponent(jLabel3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10,10, 10)
+                        .addGap(15,15,15)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10,10,10)
+                        .addComponent(demo))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15,15,15)
                         .addComponent(jLabel2)))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -157,10 +196,11 @@ public class Running extends javax.swing.JFrame {
                 .addGap(10,10,10)
                 .addComponent(jLabel1)
                 .addGap(10,10,10)
+                .addComponent(jLabel3)
+                .addGap(5,5,5)
+                .addComponent(demo)
+                .addGap(5,5,5)
                 .addComponent(jLabel2))
-                // .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                // .addComponent(jLabel3)
-                // .addGap(78, 78, 78))
         );
 
         jPanel1.add(jPanel2);
@@ -240,6 +280,7 @@ public class Running extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel demo;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
