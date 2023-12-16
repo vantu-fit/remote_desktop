@@ -71,9 +71,14 @@ public class Running extends javax.swing.JFrame {
         {
             return "No task from client!!!";
         }
+        String tempText;
         StringBuilder sb = new StringBuilder("<html>");
         for (String t : task) {
-            sb.append('-'+t).append("<br>");
+            tempText = t;
+            if (tempText.length() > 35) {
+                tempText = tempText.substring(0, 35) + "...";
+            }
+            sb.append('-'+tempText).append("<br>");
         }
         sb.append("</html>");
         return sb.toString();
@@ -103,22 +108,27 @@ public class Running extends javax.swing.JFrame {
         timer.scheduleAtFixedRate(new TimerTask() {
             int count = 0;
             String check = "check";
+            String tempText;
             @Override
             public void run() {
                 SwingUtilities.invokeLater(() -> {
                         List<String> task = returnTask();
                         String formated_task = formatTask(task);
                         jLabel8.setText(formated_task);
-                        jLabel3.setText("-Running: " + ServerThreading.statusRunning);
+                        tempText = "-Running: " + ServerThreading.statusRunning;
+                        if (tempText.length() > 35) {
+                            tempText = tempText.substring(0, 35) + "...";
+                        }
+                        jLabel3.setText(tempText);
                         if (count % 2 == 0) {
                             getDemo(demo);
-                            jLabel2.setText("-Done: " + ServerThreading.status);
+                            jLabel2.setText("-Mail sent: " + ServerThreading.status);
                         }
                         if (count % 8 == 0) {
                             if (check == ServerThreading.statusRunning && ServerThreading.statusRunning != "nothing is running"){
                                 ServerThreading.statusRunning = "nothing is running";
                                 jLabel3.setText("-Running: " + ServerThreading.statusRunning);
-                                jLabel2.setText("");
+                                jLabel2.setText("-Mail sent: ");
                                 demo.setText("");
                                 demo.setIcon(null);
                                 ServerThreading.fileDemo = "";
@@ -162,13 +172,12 @@ public class Running extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\notification1.png")); 
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
+        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("-Done: ");
+        jLabel2.setText("-Mail sent: ");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); 
+        jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 20)); 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Running: nothing!!!");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -207,14 +216,14 @@ public class Running extends javax.swing.JFrame {
         jPanel2.setBounds(0, 0, 400, 500);
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 50)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 50)); 
         jLabel4.setForeground(new java.awt.Color(0, 102, 102));
         jLabel4.setText("CONNECTED");
         jLabel5.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\controller.png")); 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); 
         jLabel6.setText(this.from);
         jLabel7.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\action.png")); 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); 
         jLabel8.setText("No task from client!!!");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
