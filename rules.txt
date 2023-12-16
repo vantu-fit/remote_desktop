@@ -1,5 +1,8 @@
 process:list
+
 process:stop:2323
+process:stop:chrome
+
 process:start:Notepad.exe
 
 screenshot:name1.png
@@ -8,7 +11,9 @@ keylog:start
 keylog:stop
 
 logout
+logout:password (linux,mac)
 
 shutdown
+shutdown:password (linux,mac)
 
 getfile:C:\Users\name1.txt

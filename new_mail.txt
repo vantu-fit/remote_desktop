@@ -1,5 +1,5 @@
-leminhquan19092004@gmail.com=screenshot:a.png,2023-12-13 21:31:25
-leminhquan19092004@gmail.com=screenshot:name1.png,2023-12-13 21:32:49
-leminhquan19092004@gmail.com=process:list,2023-12-13 21:32:55
-leminhquan19092004@gmail.com=getfile:C:\Users\lemin\Downloads\mang-may-tinh__05.network-layer - [cuuduongthancong.com].pdf,2023-12-16 20:23:35
-leminhquan19092004@gmail.com=screenshot:name1.png,2023-12-16 20:23:48
+leminhquan19092004@gmail.com=process:list,2023-12-17 00:58:57
+leminhquan19092004@gmail.com=process:list,2023-12-17 01:02:27
+leminhquan19092004@gmail.com=process:list,2023-12-17 01:03:52
+leminhquan19092004@gmail.com=process:list,2023-12-17 01:06:22
+leminhquan19092004@gmail.com=process:list,2023-12-17 01:07:48

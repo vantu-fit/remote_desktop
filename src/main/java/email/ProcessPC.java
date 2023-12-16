@@ -3,14 +3,17 @@ package email;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ProcessPC {
-
+  String os;
   Runtime runtime;
+  ProcessBuilder processBuilder;
 
   public ProcessPC() {
     try {
+      this.os = System.getProperty("os.name").toLowerCase();
       this.runtime = Runtime.getRuntime();
     } catch (Exception e) {
       System.out.println(e);
@@ -19,10 +22,15 @@ public class ProcessPC {
 
   public boolean listProcess() {
     try {
-      Process process = runtime.exec("tasklist");
-      BufferedReader reader = new BufferedReader(
-        new InputStreamReader(process.getInputStream())
-      );
+      Process process = null;
+      if (this.os.contains("win")) { 
+        //process = runtime.exec("tasklist | sort /R /+58");
+        process = runtime.exec("tasklist");
+      }
+      else if (this.os.contains("mac")||this.os.contains("nux") || this.os.contains("nix")) { 
+        process = runtime.exec("ps aux");
+      }
+      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
       BufferedWriter writer = new BufferedWriter(new FileWriter("process.txt"));
       String line;
       while ((line = reader.readLine()) != null) {
@@ -38,39 +46,89 @@ public class ProcessPC {
     }
   }
 
-  public boolean startProcess(String cmd) {
-    try {
-      ProcessBuilder builder = new ProcessBuilder(cmd);
-      builder.start();
-      System.out.println("Start procss: " + cmd + " successfull");
-      return true;
-    } catch (Exception e) {
-      System.out.println("Start procss: " + cmd + " failed");
-      return false;
+  public boolean startProcess(String path){
+    try{
+        if (this.os.contains("win")||this.os.contains("nux")||this.os.contains("nix")){
+            this.processBuilder = new ProcessBuilder(path);
+        }else if (this.os.contains("mac")) {
+            this.processBuilder = new ProcessBuilder("open", "-n",path );
+        }else{ System.out.println("Unsuported Operating System"); }
+        Process process = processBuilder.start();
+        if (process.isAlive()){
+            System.out.println("succeed");
+            return true;
+        }else{
+            System.out.println("failed");
+            return false;
+        }
+    }catch(Exception e){
+        System.out.println(e.toString());
+        return false;
     }
   }
 
-  public boolean stopProcess(String pid) {
-    try {
-      this.runtime.exec("taskkill /F /PID " + pid);
-      System.out.println("Stop procss: " + pid + " successfull");
-      return true;
-    } catch (Exception e) {
-      System.out.println("Stop procss: " + pid + " failed");
-      return false;
+  public boolean stopProcess(String appname){
+    try{
+        if(this.os.contains("win")) {
+            if(!appname.contains("exe")) {
+                appname+=".exe";
+            }
+            this.runtime.exec("taskkill /F /IM " + appname + ".exe");
+            System.out.println("Kill "+ appname+" successfully");
+            return true;
+        } else if (this.os.contains("mac")||this.os.contains("nix")||this.os.contains("nux")) {
+            this.runtime.exec("pkill -f " + appname);
+            System.out.println("Kill " + appname + " successfully");
+            return true;
+        } else { System.out.println("Unsupported operating system");
+        return false;}
+    }catch(Exception e){
+        System.out.println(e.toString());
+        return false;
     }
   }
+
+    public boolean stopProcess(int processId) {
+        try {
+            Process process;
+            if (this.os.contains("win")) {
+                process = this.runtime.exec("taskkill /F /PID " + processId);
+            } else if (this.os.contains("mac") || this.os.contains("nix") || this.os.contains("nux")) {
+                process = this.runtime.exec("kill " + processId);
+            } else {
+                System.out.println("Unsupported operating system");
+                return false;
+            }
+            int exitCode = process.waitFor();
+            return (exitCode==0);
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
 
   public boolean logout() {
     try {
-      Process process = this.runtime.exec("shutdown -s -t 3600");
-      int exitCode = process.waitFor();
+      Process process;
+      int exitCode = -1;
+      if(this.os.contains("win")) {
+        process = this.runtime.exec("shutdown /l");
+        exitCode = process.waitFor();
+      }
+      else if(this.os.contains("mac")){
+        process = Runtime.getRuntime().exec("sudo pkill loginwindow");
+        exitCode = process.waitFor();
+      }
+      else if(this.os.contains("nux")||this.os.contains("nix")){
+        process = Runtime.getRuntime().exec("pkill gnome-session");
+        exitCode = process.waitFor();
+      }
 
       if (exitCode == 0) {
-        System.out.println("Logout successfull");
+        System.out.println("Logout successfully");
         return true;
       } else {
-        System.out.println("Logout faild . Exit code: " + exitCode);
+        System.out.println("Logout failed . Exit code: " + exitCode);
         return false;
       }
     } catch (Exception e) {
@@ -79,10 +137,20 @@ public class ProcessPC {
     }
   }
 
-  public boolean shutdown() {
+  public boolean shutdown(String Password) {
     try {
-      Process process = this.runtime.exec("shutdown -s -t 3600");
-      int exitCode = process.waitFor();
+      Process process;
+      int exitCode = -1;
+      if(this.os.contains("win")) {
+        process = this.runtime.exec("shutdown -s -t 3600");
+        exitCode = process.waitFor();
+      }
+      else if(this.os.contains("nux")||this.os.contains("nix")||this.os.contains("mac")){
+          String command = "echo '" + Password + "' | sudo -S shutdown -h 3600";
+          process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
+          exitCode = process.waitFor();
+      }
+
 
       if (exitCode == 0) {
         System.out.println("Shutdown successfull");

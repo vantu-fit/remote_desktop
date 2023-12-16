@@ -147,11 +147,11 @@ public class RemotePC {
       case "process":
         if (message[1].equals("list")) {
           process.listProcess();
+          ServerThreading.fileDemo = readFile("process.txt");
           if (send.sendFile("process.txt"))
           {
-            ServerThreading.fileDemo = readFile("process.txt");
             System.out.println("list process");
-            return "The process.txt was sent successfully";
+            return "process.txt was sent successfully";
           }
           else return "list process failed!";
         }
@@ -217,14 +217,24 @@ public class RemotePC {
         }
         //break;
       case "logout":
-        process.logout();
-        System.out.println("logout suscessfully");
-        return "logout suscessfully";
+        if (process.logout()){
+          return "logout successfully";
+        }
+        else return "logout failed";
         //break;
       case "shutdown":
-        process.shutdown();
-        System.out.println("shutdown suscessfully");
-        return "shutdown in the next 1 hour";
+        if (message[1].length() > 0){
+          if (process.shutdown(message[1])){
+            return "shutdown in the next 1 hour";
+          }
+          else return "shutdown failed";
+        }
+        else {
+          if (process.shutdown("")){
+            return "shutdown in the next 1 hour";
+          }
+          else return "shutdown failed";
+        }
         //break;
       case "getfile":
         String path = "";
