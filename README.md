@@ -52,22 +52,17 @@ Example:
 
 Enter controller's Gmail
 
-<center>
 ![enter controller's gmail](./img-for-readme/login.png)
-</center>
+
 Get the list of currently running processes:
 
 *Open the controller's Gmail. Compose an email with the subject  "process:list" and send it to dotu10257@gmail.com*
 
-<center>
 ![compose an email with the subject  "process:list"](./img-for-readme/email_example1.png)
-</center>
 
 *Receive the response email with the "process.txt" file attached*
 
-<center>
 ![response email](./img-for-readme/email_example3.png)
-</center>
 
 ## 3. About us
 **Lecturer:** Đỗ Hoàng Cường
