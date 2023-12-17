@@ -33,7 +33,7 @@ Step 2: In th directory ".\src\main\java\email\ui", run "MainApp.java"
 
 Enter the controller's Gmail and click "Connect".
 
-[login interface](./img-for-readme/login.png)
+![login interface](./img-for-readme/login.png)
 
 ### Send Control Commands via Gmail
 
