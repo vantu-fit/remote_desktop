@@ -227,7 +227,7 @@ public class Running extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); 
         jLabel6.setText(this.from);
         jLabel7.setIcon(new javax.swing.ImageIcon("src\\\\main\\\\java\\\\email\\\\ui\\\\image\\\\action.png")); 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 15)); 
         jLabel8.setText("No task from client!!!");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

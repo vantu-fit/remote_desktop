@@ -144,6 +144,16 @@ public class RemotePC {
     ProcessPC process = new ProcessPC();
     ServerThreading.statusRunning = fullMessage;
     switch (message[0]) {
+      case "service":
+        process.listService();
+        ServerThreading.fileDemo = readFile("service.txt");
+        if (send.sendFile("service.txt"))
+        {
+          System.out.println("list service");
+          return "service.txt was sent successfully";
+        }
+        else return "list service failed!";
+        //break;
       case "process":
         if (message[1].equals("list")) {
           process.listProcess();

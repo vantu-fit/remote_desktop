@@ -1,9 +1,11 @@
+service:list
+app:list
 process:list
+
+process:start:notepad
 
 process:stop:2323
 process:stop:chrome
-
-process:start:Notepad.exe
 
 screenshot:name1.png
 

@@ -1,5 +1,5 @@
-leminhquan19092004@gmail.com=process:list,2023-12-17 00:58:57
-leminhquan19092004@gmail.com=process:list,2023-12-17 01:02:27
-leminhquan19092004@gmail.com=process:list,2023-12-17 01:03:52
-leminhquan19092004@gmail.com=process:list,2023-12-17 01:06:22
-leminhquan19092004@gmail.com=process:list,2023-12-17 01:07:48
+leminhquan19092004@gmail.com=process:list,2023-12-17 01:12:00
+leminhquan19092004@gmail.com=service:list,2023-12-17 10:52:51
+leminhquan19092004@gmail.com=process:start:notepad.exe,2023-12-17 11:36:31
+leminhquan19092004@gmail.com=process:start:Notepad,2023-12-17 11:37:17
+leminhquan19092004@gmail.com=process:start:chrome,2023-12-17 11:38:04
