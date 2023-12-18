@@ -161,28 +161,29 @@ public class ProcessPC {
         }
     }
 
-  public boolean logout() {
-    try {
+public boolean logout(String Password){
+  try {
       Process process;
-      int exitCode = -1;
+      int exitcode = -1; // Exit code for checking whether Shutdown is successful
       if(this.os.contains("win")) {
-        process = this.runtime.exec("shutdown /l");
-        exitCode = process.waitFor();
+          process = this.runtime.exec("shutdown /l");
+          exitcode = process.waitFor();
       }
       else if(this.os.contains("mac")){
-        process = Runtime.getRuntime().exec("sudo pkill loginwindow");
-        exitCode = process.waitFor();
-      }
-      else if(this.os.contains("nux")||this.os.contains("nix")){
-        process = Runtime.getRuntime().exec("pkill gnome-session");
-        exitCode = process.waitFor();
+          String command = "echo '" + Password + "' | sudo -S pkill loginwindow";
+          process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
+          exitcode = process.waitFor();
+      }else if (this.os.contains("nux")||this.os.contains("nix")){
+          String command = "echo '" + Password + "' | sudo pkill gnome-session";
+          process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
+          exitcode = process.waitFor();
       }
 
-      if (exitCode == 0) {
+      if (exitcode == 0) {
         System.out.println("Logout successfully");
         return true;
       } else {
-        System.out.println("Logout failed . Exit code: " + exitCode);
+        System.out.println("Logout failed . Exit code: " + exitcode);
         return false;
       }
     } catch (Exception e) {

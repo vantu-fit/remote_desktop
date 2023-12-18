@@ -227,10 +227,18 @@ public class RemotePC {
         }
         //break;
       case "logout":
-        if (process.logout()){
-          return "logout successfully";
+        if (message[1].length() > 0){
+          if (process.logout(message[1])){
+            return "logout successfully";
+          }
+          else return "logout failed";
         }
-        else return "logout failed";
+        else {
+          if (process.shutdown("")){
+            return "logout successfully";
+          }
+          else return "logout failed";
+        }
         //break;
       case "shutdown":
         if (message[1].length() > 0){
