@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProcessPC {
   String os;
@@ -22,32 +19,6 @@ public class ProcessPC {
       System.out.println(e);
     }
   }
-
-  // public boolean listApp() {
-  //   try {
-  //     Process process = null;
-  //     if (this.os.contains("win")) { 
-  //       process = new ProcessBuilder("C:\\Windows\\System32\\wbem\\wmic", "process", "get", "Caption", "ExecutablePath").start();
-  //     }
-  //     else if (this.os.contains("mac") || this.os.contains("nix") || this.os.contains("nux")) {
-  //       process = new ProcessBuilder("systemctl", "list-units", "--type=service", "--state=running", "--state=exited").start();
-  //     }
-  //     System.out.println("List app succeed");
-  //     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-  //     BufferedWriter writer = new BufferedWriter(new FileWriter("app.txt"));
-  //     String line;
-  //     while ((line = reader.readLine()) != null) {
-  //       writer.write(line);
-  //       writer.newLine();
-  //     }
-  //     writer.close();
-  //     reader.close();
-  //     return true;
-  //   } catch (Exception e) {
-  //     System.out.println(e);
-  //     return false;
-  //   }
-  // }
 
   public boolean listService() {
     try {
@@ -219,10 +190,4 @@ public boolean logout(String Password){
       return false;
     }
   }
-
-  // public static void main(String[] args) {
-  //   ProcessPC myProcess = new ProcessPC();
-  //   myProcess.listService();
-  //   //myProcess.listApp();
-  // }
 }

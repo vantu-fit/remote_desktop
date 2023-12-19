@@ -1,5 +1,4 @@
 service:list
-app:list
 process:list
 
 process:start:notepad
