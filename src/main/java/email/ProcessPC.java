@@ -146,8 +146,8 @@ public boolean logout(String Password){
           exitcode = process.waitFor();
       }else if (this.os.contains("nux")||this.os.contains("nix")){
         if (System.getProperty("os.version").toLowerCase().contains("kali")) {
-          String command = "/bin/bash -c \"echo '"+Password+"' | sudo -S pkill -u kali gnome-session\"";
-          process = Runtime.getRuntime().exec(command);
+        String command = "echo '" + Password + "' | sudo -S pkill -u kali gnome-session";
+        process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
           exitcode = process.waitFor();
         }
         else {
@@ -180,7 +180,8 @@ public boolean logout(String Password){
       }
       else if(this.os.contains("nux")||this.os.contains("nix")||this.os.contains("mac")){
         if (System.getProperty("os.version").toLowerCase().contains("kali")) {
-          process = Runtime.getRuntime().exec("/bin/bash -c \"echo '"+Password+"' | sudo -S shutdown -h now\"");
+          String command = "echo '" + Password + "' | sudo -S shutdown -h now";
+          process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
           exitCode = process.waitFor();
         }
         else {
