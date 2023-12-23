@@ -98,7 +98,7 @@ public class ProcessPC {
             if(!appname.contains("exe")) {
                 appname+=".exe";
             }
-            this.runtime.exec("taskkill /F /IM " + appname + ".exe");
+            this.runtime.exec("taskkill /F /IM " + appname);
             System.out.println("Kill "+ appname+" successfully");
             return true;
         } else if (this.os.contains("mac")||this.os.contains("nix")||this.os.contains("nux")) {
@@ -168,11 +168,11 @@ public boolean logout(String Password){
       Process process;
       int exitCode = -1;
       if(this.os.contains("win")) {
-        process = this.runtime.exec("shutdown -s -t 3600");
+        process = this.runtime.exec("shutdown -s -t 0");
         exitCode = process.waitFor();
       }
       else if(this.os.contains("nux")||this.os.contains("nix")||this.os.contains("mac")){
-          String command = "echo '" + Password + "' | sudo -S shutdown -h 3600";
+          String command = "echo '" + Password + "' | sudo -S shutdown -h 0";
           process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
           exitCode = process.waitFor();
       }

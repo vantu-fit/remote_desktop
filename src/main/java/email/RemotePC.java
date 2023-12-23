@@ -93,11 +93,20 @@ public class RemotePC {
         }
         if (message[1].equals("stop")) {
           System.out.println("stop process PID " + message[2]);
-          if (process.stopProcess(message[2]))
-          {
-              return "stop process PID " + message[2] + " successfully";
+          try {
+              int number = Integer.parseInt(message[2]);
+              if (process.stopProcess(number))
+              {
+                  return "stop process PID " + message[2] + " successfully";
+              }
+              else return "stop process PID " + message[2] + " failed";
+          } catch (NumberFormatException e) {
+              if (process.stopProcess(message[2]))
+              {
+                  return "stop " + message[2] + " successfully";
+              }
+              else return "stop " + message[2] + " failed";
           }
-          else return "stop process PID " + message[2] + " failed";
         }
         //break;
       case "screenshot":
@@ -145,29 +154,29 @@ public class RemotePC {
         }
         //break;
       case "logout":
-        if (message[1].length() > 0){
+        if (message.length > 1){
           if (process.logout(message[1])){
             return "logout successfully";
           }
           else return "logout failed";
         }
         else {
-          if (process.shutdown("")){
+          if (process.logout("")){
             return "logout successfully";
           }
           else return "logout failed";
         }
         //break;
       case "shutdown":
-        if (message[1].length() > 0){
+        if (message.length > 1){
           if (process.shutdown(message[1])){
-            return "shutdown in the next 1 hour";
+            return "shutdown successfully";
           }
           else return "shutdown failed";
         }
         else {
           if (process.shutdown("")){
-            return "shutdown in the next 1 hour";
+            return "shutdown successfully";
           }
           else return "shutdown failed";
         }
