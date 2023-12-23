@@ -179,9 +179,15 @@ public boolean logout(String Password){
         exitCode = process.waitFor();
       }
       else if(this.os.contains("nux")||this.os.contains("nix")||this.os.contains("mac")){
+        if (System.getProperty("os.version").toLowerCase().contains("kali")) {
+          process = Runtime.getRuntime().exec("/bin/bash -c \"echo '"+Password+"' | sudo -S shutdown -h now\"");
+          exitCode = process.waitFor();
+        }
+        else {
           String command = "echo '" + Password + "' | sudo -S shutdown -h 0";
           process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
           exitCode = process.waitFor();
+        }
       }
 
 
