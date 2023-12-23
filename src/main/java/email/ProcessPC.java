@@ -145,9 +145,16 @@ public boolean logout(String Password){
           process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
           exitcode = process.waitFor();
       }else if (this.os.contains("nux")||this.os.contains("nix")){
-          String command = "echo '" + Password + "' | sudo pkill gnome-session";
-          process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
+        if (System.getProperty("os.version").toLowerCase().contains("kali")) {
+          String command = "/bin/bash -c \"echo '"+Password+"' | sudo -S pkill -u kali gnome-session\"";
+          process = Runtime.getRuntime().exec(command);
           exitcode = process.waitFor();
+        }
+        else {
+        String command = "echo '" + Password + "' | sudo pkill gnome-session";
+        process = Runtime.getRuntime().exec(new String[] { "/bin/bash","-c", command });
+        exitcode = process.waitFor();
+        }
       }
 
       if (exitcode == 0) {
